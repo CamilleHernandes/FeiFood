@@ -1,13 +1,20 @@
+// funcoes usuario
+
 void cadastrarUsuario();
 int loginUsuario();
-void carregarUsuarios();
 
-// Funções de alimentos
-void carregaralimentos();
+
+// Funções alimentos
+
 void buscarAlimento();
 void listarInformacoesAlimento(char nome[], char preco[]);
 
-// // Funções de pedidos
-// void cadastrarPedido();
-// void avaliarPedido();
-// void carregarPedidos();
+// Funções pedidos
+void menuPedidos();
+
+void criarPedido();
+void editarPedido();
+void excluirPedido();
+// void adicionarAlimentoPedido();
+void removerAlimentoPedido();
+void avaliarPedido();

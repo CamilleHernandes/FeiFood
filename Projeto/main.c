@@ -21,7 +21,7 @@ int main(){
                     break;
                 case 2:
                     if (loginUsuario()) {
-                        printf("Login bem-sucedido!\n");
+                        printf("Login bem-sucedido!\n\n");
                         logado = 1;
                     } else {
                         printf("Falha no login.\n");
@@ -35,7 +35,7 @@ int main(){
         }
     }
     else{
-            printf("------Bem-vindo! O que deseja fazer agora?------\n");
+            printf("------Bem-vindo(a)! O que deseja fazer agora?------\n");
             printf("1. Buscar alimento\n");
             printf("2. Listar informações de alimentos\n");
             printf("3. Cadastrar pedido\n");
@@ -51,16 +51,10 @@ int main(){
                     //listarInformacoesAlimento();
                     break;
                 case 3: 
-                   // avaliarPedido(); 
+                    menuPedidos();
                     break;
                 case 4: 
-                    //carregarUsuarios(); 
-                    break;
-                case 5: 
-                    //carregarAlimentos();
-                     break;
-                case 6: 
-                    //carregarPedidos(); 
+                    avaliarPedido();
                     break;
                 case 0:
                     printf("Saindo...\n");

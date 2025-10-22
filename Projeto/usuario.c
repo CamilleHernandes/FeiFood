@@ -4,19 +4,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void carregarUsuarios() {
-    FILE *f = fopen("usuarios.txt", "r");
-    char nome[50], senha[20];
-    printf("\n--- Lista de Usuários ---\n");
-    if (f == NULL) {
-        printf("Arquivo de usuários não encontrado.\n");
-        return;
-    }
-    while (fscanf(f, "%s %s", nome, senha) != EOF) {
-        printf("Usuário: %s | Senha: %s\n", nome, senha);
-    }
-    fclose(f);
-}
 
 void cadastrarUsuario() {
     FILE *f = fopen("usuarios.txt", "a");
