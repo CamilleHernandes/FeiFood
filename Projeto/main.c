@@ -9,7 +9,7 @@ int main(){
 
     do {
         if(!logado){
-            printf("\n--- Menu FEIFood ---\n");
+            printf("\n***** Menu FEIFood *****\n");
             printf("1. Cadastrar Usuário\n");
             printf("2. Login\n");
             printf("0. Sair\nEscolha: ");
@@ -35,11 +35,12 @@ int main(){
         }
     }
     else{
-            printf("------Bem-vindo(a)! O que deseja fazer agora?------\n");
+            printf("******Bem-vindo(a)! O que deseja fazer agora?******\n");
             printf("1. Buscar alimento\n");
             printf("2. Listar informações de alimentos\n");
             printf("3. Cadastrar pedido\n");
             printf("4. Avaliar pedido\n");
+            printf("5. Logout\n");
             printf("0. Sair\nEscolha: ");
             scanf("%d", &opcao);
 
@@ -56,6 +57,9 @@ int main(){
                 case 4: 
                     avaliarPedido();
                     break;
+                case 5:
+                    logoutUsuario();
+                    break;
                 case 0:
                     printf("Saindo...\n");
                     break;
@@ -63,7 +67,7 @@ int main(){
                     printf("Opção inválida.\n");
             }
     }
-} while(opcao != 0);
+} while(opcao != 0 & opcao != 5);
 
     return 0;
 }

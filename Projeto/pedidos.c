@@ -7,7 +7,7 @@ void menuPedidos() {
     int opcao;
 
     do {
-        printf("\n--- Menu de Pedidos ---\n");
+        printf("\n*********** Menu de Pedidos ***********\n");
         printf("1. Criar pedido\n");
         printf("2. Editar pedido\n");
         printf("3. Excluir pedido\n");
@@ -27,7 +27,7 @@ void menuPedidos() {
                 excluirPedido();
                 break;
             case 4:
-                // adicionarAlimentoPedido();
+                adicionarAlimentoPedido();
                 break;
             case 5:
                 removerAlimentoPedido();
@@ -43,53 +43,81 @@ void menuPedidos() {
 
 void criarPedido() {
     FILE *f = fopen("pedidos.txt", "a");
-    char nomePedido[50], usuario[50], alimento[50];
-    int qtd;
+    char nomePedido[50], alimento[50], observacao[100], usuario[50];
+    int quantidade, qtdAlimento;
+
+    // Pega o usuário logado
+    FILE *sessao = fopen("sessao.txt", "r");
+    fscanf(sessao, "%s", usuario);
+    fclose(sessao);
 
     printf("Digite um nome para o pedido: ");
     scanf("%s", nomePedido);
 
-    printf("Digite seu nome de usuário: ");
-    scanf("%s", usuario);
-
     printf("Quantos alimentos deseja adicionar ao pedido? ");
-    scanf("%d", &qtd);
+    scanf("%d", &quantidade);
 
     fprintf(f, "%s %s ", nomePedido, usuario); // nome do pedido e usuário
 
-    for (int i = 0; i < qtd; i++) {
+    for (int i = 0; i < quantidade; i++) {
         printf("Digite o alimento %d: ", i + 1);
         scanf("%s", alimento);
-        fprintf(f, "%s; ", alimento);
+
+        printf("Digite a qtd do alimento %d: ", i + 1);
+        scanf("%d", qtdAlimento);
+
+        fprintf(f, "alimento: %s qtd: %d", alimento, qtdAlimento);
+
+        if (i < quantidade - 1) {
+            fprintf(f, ";");
+        }
     }
 
-    fprintf(f, "\n");
+
+    printf("Deseja adicionar alguma observação? (ex: sem cebola, bem passado): ");
+    scanf(" %[^\n]", observacao); // lê até o fim da linha
+
+    fprintf(f, " ;Qtd Itens: %d Obs: %s\n", quantidade, observacao);
     fclose(f);
 
     printf("Pedido criado com sucesso!\n");
 }
 
 
-void editarPedido() { // tem que arrumar 
+void editarPedido() {
     FILE *f = fopen("pedidos.txt", "r");
     FILE *arqaux = fopen("aux.txt", "w");
-    char nomePedido[50], usuario[50], novoAlimentos[200];
-    char linhaNome[50], linhaUsuario[50], linhaAlimentos[200];
+    char nomePedido[50], usuario[50];
+    char linha[300];
     int encontrado = 0;
+
+    // Pega o usuário logado
+    FILE *sessao = fopen("sessao.txt", "r");
+    fscanf(sessao, "%s", usuario);
+    fclose(sessao);
 
     printf("Digite o nome do pedido que deseja editar: ");
     scanf("%s", nomePedido);
-    printf("Digite seu nome de usuário: ");
-    scanf("%s", usuario);
-    printf("Digite a nova lista de alimentos separados por ';': ");
-    scanf("%s", novoAlimentos);
 
-    while (fscanf(f, "%s %s %s", linhaNome, linhaUsuario, linhaAlimentos) != EOF) {
+    while (fgets(linha, sizeof(linha), f)) {
+        char linhaNome[50], linhaUsuario[50], alimentos[200], observacao[100];
+        int quantidade;
+
+        sscanf(linha, "%s %s %s %d %[^\n]", linhaNome, linhaUsuario, alimentos, &quantidade, observacao);
+
         if (strcmp(linhaNome, nomePedido) == 0 && strcmp(linhaUsuario, usuario) == 0) {
-            fprintf(arqaux, "%s %s %s\n", nomePedido, usuario, novoAlimentos);
             encontrado = 1;
+
+            printf("Novo(s) alimento(s): ");
+            scanf("%s", alimentos);
+            printf("Nova quantidade: ");
+            scanf("%d", &quantidade);
+            printf("Nova observação: ");
+            scanf(" %[^\n]", observacao);
+
+            fprintf(arqaux, "%s %s %s Qtd: %d Obs: %s\n", linhaNome, linhaUsuario, alimentos, quantidade, observacao);
         } else {
-            fprintf(arqaux, "%s %s %s\n", linhaNome, linhaUsuario, linhaAlimentos);
+            fputs(linha, arqaux);
         }
     }
 
@@ -101,27 +129,37 @@ void editarPedido() { // tem que arrumar
     if (encontrado)
         printf("Pedido editado com sucesso!\n");
     else
-        printf("Pedido não encontrado.\n");
+        printf("Pedido não encontrado ou não pertence ao usuário logado.\n");
 }
+
+
 
 void excluirPedido() {
     FILE *f = fopen("pedidos.txt", "r");
     FILE *arqaux = fopen("aux.txt", "w");
     char nomePedido[50], usuario[50];
-    char linhaNome[50], linhaUsuario[50], linhaAlimentos[200];
+    char linha[300];
     int encontrado = 0;
+
+    // Pega o usuário logado
+    FILE *sessao = fopen("sessao.txt", "r");
+    fscanf(sessao, "%s", usuario);
+    fclose(sessao);
 
     printf("Digite o nome do pedido que deseja excluir: ");
     scanf("%s", nomePedido);
-    printf("Digite seu nome de usuário: ");
-    scanf("%s", usuario);
 
-    while (fscanf(f, "%s %s %s", linhaNome, linhaUsuario, linhaAlimentos) != EOF) {
+    while (fgets(linha, sizeof(linha), f)) {
+        char linhaNome[50], linhaUsuario[50];
+
+        sscanf(linha, "%s %s", linhaNome, linhaUsuario);
+
         if (strcmp(linhaNome, nomePedido) == 0 && strcmp(linhaUsuario, usuario) == 0) {
             encontrado = 1;
-            continue;
+            // Não copia a linha — exclui
+        } else {
+            fputs(linha, arqaux); // mantém os outros pedidos
         }
-        fprintf(arqaux, "%s %s %s\n", linhaNome, linhaUsuario, linhaAlimentos);
     }
 
     fclose(f);
@@ -132,25 +170,57 @@ void excluirPedido() {
     if (encontrado)
         printf("Pedido excluído com sucesso!\n");
     else
-        printf("Pedido não encontrado.\n");
+        printf("Pedido não encontrado ou não pertence ao usuário logado.\n");
 }
 
-// void adicionarAlimentoPedido() {
-//     FILE *f = fopen("pedidos.txt", "a");
-//     char usuario[50], alimento[50];
 
-//     printf("Digite seu nome de usuário: ");
-//     scanf("%s", usuario);
-//     printf("Digite o alimento que deseja adicionar: ");
-//     scanf("%s", alimento);
+void adicionarAlimentoPedido() {
+    FILE *f = fopen("pedidos.txt", "r");
+    FILE *arqaux = fopen("aux.txt", "w");
+    char nomePedido[50], novoAlimento[50], usuario[50];
+    char linha[300];
+    int encontrado = 0;
 
-//     fprintf(f, "%s %s\n", usuario, alimento);
-//     fclose(f);
+    // Pega o usuário logado
+    FILE *sessao = fopen("sessao.txt", "r");
+    fscanf(sessao, "%s", usuario);
+    fclose(sessao);
 
-//     printf("Alimento adicionado ao pedido!\n");
-// }
+    printf("Digite o nome do pedido que deseja alterar: ");
+    scanf("%s", nomePedido);
+    printf("Digite o alimento que deseja adicionar: ");
+    scanf("%s", novoAlimento);
 
-void removerAlimentoPedido() {
+    while (fgets(linha, sizeof(linha), f)) {
+        char linhaNome[50], linhaUsuario[50], alimentos[200], observacao[100];
+        int quantidade;
+
+        sscanf(linha, "%s %s %s %d %[^\n]", linhaNome, linhaUsuario, alimentos, &quantidade, observacao);
+
+        if (strcmp(linhaNome, nomePedido) == 0 && strcmp(linhaUsuario, usuario) == 0) {
+            encontrado = 1;
+
+            strcat(alimentos, ";");
+            strcat(alimentos, novoAlimento);
+
+            fprintf(arqaux, "%s %s %s %d %s\n", linhaNome, linhaUsuario, alimentos, quantidade, observacao);
+        } else {
+            fputs(linha, arqaux);
+        }
+    }
+
+    fclose(f);
+    fclose(arqaux);
+    remove("pedidos.txt");
+    rename("aux.txt", "pedidos.txt");
+
+    if (encontrado)
+        printf("Alimento adicionado com sucesso!\n");
+    else
+        printf("Pedido não encontrado ou não pertence ao usuário logado.\n");
+}
+
+void removerAlimentoPedido() {// tem q arrumar olha no copilot q tem 
     FILE *f = fopen("pedidos.txt", "r");
     FILE *arqaux = fopen("aux.txt", "w");
     char nomePedido[50], usuario[50], alimentoRemover[50];
@@ -201,16 +271,19 @@ void removerAlimentoPedido() {
 }
 
 
-void avaliarPedido() { // tem que arrumar
+void avaliarPedido() {
     FILE *f = fopen("avaliacoes.txt", "a");
     char nomePedido[50], usuario[50];
     int nota;
 
+    // Pega o usuário logado
+    FILE *sessao = fopen("sessao.txt", "r");
+    fscanf(sessao, "%s", usuario);
+    fclose(sessao);
+
     printf("Digite o nome do pedido que deseja avaliar: ");
     scanf("%s", nomePedido);
-    printf("Digite seu nome de usuário: ");
-    scanf("%s", usuario);
-    printf("Digite a nota (0 a 5): ");
+    printf("Quantas estrelas esse pedido merece? (0 a 5): ");
     scanf("%d", &nota);
 
     if (nota < 0 || nota > 5) {
@@ -219,8 +292,8 @@ void avaliarPedido() { // tem que arrumar
         return;
     }
 
-    fprintf(f, "%s %s %d\n", nomePedido, usuario, nota);
+    fprintf(f, "Pedido: %s Usuário: %s Nota: %d\n", nomePedido, usuario, nota);
     fclose(f);
 
-    printf("Avaliação registrada com sucesso!\n");
+    printf("Avaliação registrada com sucesso!\n\n");
 }

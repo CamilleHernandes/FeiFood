@@ -2,6 +2,9 @@
 
 void cadastrarUsuario();
 int loginUsuario();
+void logoutUsuario();
+// int estaLogado();
+void mostrarUsuarioLogado();
 
 
 // Funções alimentos
@@ -15,6 +18,6 @@ void menuPedidos();
 void criarPedido();
 void editarPedido();
 void excluirPedido();
-// void adicionarAlimentoPedido();
+void adicionarAlimentoPedido();
 void removerAlimentoPedido();
 void avaliarPedido();
