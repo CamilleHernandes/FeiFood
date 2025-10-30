@@ -2,7 +2,7 @@
 #include <string.h>
 
 void cadastrarUsuario() {
-    FILE *f = fopen("usuarios.txt", "a");
+    FILE *usuarios = fopen("usuarios.txt", "a");
     char nome[50], senha[20], email[100];
 
     printf("Nome: ");
@@ -13,15 +13,15 @@ void cadastrarUsuario() {
     scanf("%s", senha);
 
 
-    fprintf(f, "%s %s %s\n", nome, email,senha);
-    fclose(f);
+    fprintf(usuarios, "%s %s %s\n", nome, email,senha);
+    fclose(usuarios);
 
     printf("Usuário cadastrado com sucesso!\n");
 }
 
 
 int loginUsuario() {
-    FILE *f = fopen("usuarios.txt", "r");
+    FILE *usuarios = fopen("usuarios.txt", "r");
     char nome[50], senha[20], nomeLido[50], emailLido[100], senhaLida[20];
     int logado = 0;
 
@@ -30,18 +30,18 @@ int loginUsuario() {
     printf("Senha: ");
     scanf("%s", senha);
 
-    while (fscanf(f, "%s %s %s", nomeLido, emailLido, senhaLida) != EOF) {
+    while (fscanf(usuarios, "%s %s %s", nomeLido, emailLido, senhaLida) != EOF) {
         if (strcmp(nome, nomeLido) == 0 && strcmp(senha, senhaLida) == 0) {
             logado = 1;
             break;
         }
     }
-    fclose(f);
+    fclose(usuarios);
 
     if (logado) {
-        FILE *sessao = fopen("sessao.txt", "w");
-        fprintf(sessao, "%s", nome);
-        fclose(sessao);
+        FILE *arquivoUserLogado = fopen("sessao.txt", "w");
+        fprintf(arquivoUserLogado, "%s", nome);
+        fclose(arquivoUserLogado);
         printf("Login realizado com sucesso!\n");
         return 1;
     } else {
@@ -56,6 +56,10 @@ int loginUsuario() {
 void logoutUsuario() {
     if (remove("sessao.txt") == 0) {
         printf("Logout realizado com sucesso!\n");
+
+        // Limpa o conteúdo do arquivo buscados.txt para um novo usuario
+        FILE *limpaUser = fopen("buscados.txt", "w");
+        fclose(limpaUser);
     } else {
         printf("Nenhum usuário estava logado.\n");
     }
@@ -64,10 +68,10 @@ void logoutUsuario() {
 // Mostra o nome do usuário logado
 void mostrarUsuarioLogado() {
     char nome[50];
-    FILE *sessao = fopen("sessao.txt", "r");
-    if (sessao != NULL) {
-        fscanf(sessao, "%s", nome);
-        fclose(sessao);
+    FILE *arquivoUserLogado = fopen("sessao.txt", "r");
+    if (arquivoUserLogado != NULL) {
+        fscanf(arquivoUserLogado, "%s", nome);
+        fclose(arquivoUserLogado);
         printf("Usuário logado: %s\n", nome);
     } else {
         printf("Nenhum usuário está logado.\n");

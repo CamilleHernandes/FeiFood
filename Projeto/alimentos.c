@@ -4,29 +4,43 @@
 #include"funcoes.h"
 
 void buscarAlimento() {
-    FILE *f = fopen("alimentos.txt", "r");
-    char busca[50], nome[50], preco[10];
+    FILE *alim = fopen("alimentos.txt", "r");
+    FILE *buscados = fopen("buscados.txt", "a");
+    char nomeBusca[50], nome[50];
+    float preco;
+    int encontrado = 0;
 
-    printf("Digite o nome ou parte do nome do alimento: ");
-    scanf("%s", busca);
+    printf("\nQual alimento que deseja buscar?: ");
+    scanf("%s", nomeBusca);
 
-    if (f == NULL) {
-        printf("Arquivo de alimentos não encontrado.\n");
-        return;
-    }
-
-    printf("\n--- Alimentos encontrados ---\n");
-    while (fscanf(f, "%s %s", nome, preco) != EOF) {
-        if (strstr(nome, busca)) {
-            listarInformacoesAlimento(nome, preco);
+    while (fscanf(alim, "%s %f", nome, &preco) != EOF) {
+        if (strcmp(nomeBusca, nome) == 0) {
+            printf("\nAlimento encontrado: %s - R$ %.2f\n", nome, preco);
+            fprintf(buscados, "%s %.2f\n\n", nome, preco);
+            encontrado = 1;
+            break;
         }
     }
 
-    fclose(f);
+    fclose(alim);
+    fclose(buscados);
+
+    if (!encontrado) {
+        printf("Alimento não encontrado.\n");
+    }
 }
 
-void listarInformacoesAlimento(char nome[], char preco[]) {
-    printf("Nome: %s\n", nome);
-    printf("Preço: R$%s\n", preco);
-    printf("-------------------------\n");
+
+void listarAlimentosBuscados() {
+    FILE *busca = fopen("buscados.txt", "r");
+    char nome[50];
+    float preco;
+
+    printf("\n****Alimentos buscados****\n");
+
+    while (fscanf(busca, "%s %f", nome, &preco) != EOF) {
+        printf("%s - R$ %.2f\n\n", nome, preco);
+    }
+
+    fclose(busca);
 }

@@ -35,13 +35,13 @@ int main(){
         }
     }
     else{
-            printf("******Bem-vindo(a)! O que deseja fazer agora?******\n");
+            printf("\n******Bem-vindo(a)! O que deseja fazer agora?******\n");
             printf("1. Buscar alimento\n");
             printf("2. Listar informações de alimentos\n");
             printf("3. Cadastrar pedido\n");
             printf("4. Avaliar pedido\n");
             printf("5. Logout\n");
-            printf("0. Sair\nEscolha: ");
+            printf("0. Sair do programa\nEscolha: ");
             scanf("%d", &opcao);
 
             switch(opcao) {
@@ -49,7 +49,7 @@ int main(){
                     buscarAlimento(); 
                     break;
                 case 2: 
-                    //listarInformacoesAlimento();
+                    listarAlimentosBuscados();
                     break;
                 case 3: 
                     menuPedidos();
@@ -59,6 +59,7 @@ int main(){
                     break;
                 case 5:
                     logoutUsuario();
+                    logado = 0; // volta para o menu de login pois o usuario nao esta mais logado
                     break;
                 case 0:
                     printf("Saindo...\n");
@@ -67,7 +68,7 @@ int main(){
                     printf("Opção inválida.\n");
             }
     }
-} while(opcao != 0 & opcao != 5);
+} while(opcao != 0);
 
     return 0;
 }

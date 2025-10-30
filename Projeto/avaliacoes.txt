@@ -1,3 +1,2 @@
-; pizza 4
-teste1 camille 2
-teste1 Camille 3
+Pedido: teste2 Usuário: ana Nota: 3
+Pedido: teste2 Usuário: camille Nota: 5

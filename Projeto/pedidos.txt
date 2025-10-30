@@ -1,1 +1,1 @@
-teste2 Camille fritas; 1768776003 nao;
+teste2 camille Item: suco Qtd: 2;Item: bolo Qtd: 1 ;Obs: nao

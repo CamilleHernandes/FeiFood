@@ -1,0 +1,15 @@
+pizza 45.90
+sushi 42.50
+hamburguer 28.00
+salada 15.00
+lasanha 32.40
+pastel 12.50
+coxinha 7.00
+esfiha 5.50
+tapioca 9.90
+pudim 15.00
+brigadeiro 5.50
+bolo 15.00
+suco 6.90
+refrigerante 5.50
+agua 3.00
