@@ -83,36 +83,57 @@ void criarPedido() {
 }
 
 
-
 void editarPedido() {
+    // abre o arquivo original dos pedidos pra leitura
     FILE *arquivoPedidos = fopen("pedidos.txt", "r");
 
     // cria um arquivo temporário pra salvar os pedidos atualizados
     FILE *arquivoTemporario = fopen("temp_pedidos.txt", "w");
 
-    // variáveis pra pegar o nome do pedido, item que vai ser editado, e o usuário logado
-    char nomePedido[50], itemAlvo[50], usuarioLogado[50];
+    // variáveis pra pegar o nome do pedido, novo nome (se for o caso), item que vai ser editado, e o usuário logado
+    char nomePedido[50], novoNomePedido[50], itemAlvo[50], usuarioLogado[50];
     int novaQuantidade;
     char linhaPedido[500];
-    int pedidoEncontrado = 0;
+    int pedidoEncontrado = 0, opcao;
 
     // abre o arquivo da sessão pra saber quem tá logado
     FILE *arquivoUserLogado = fopen("sessao.txt", "r");
     fscanf(arquivoUserLogado, "%s", usuarioLogado);
     fclose(arquivoUserLogado);
 
-    // pega as infos do usuário
+    // menu de edição — o usuário escolhe o que quer alterar
+    printf("\n***** O que deseja editar? *****\n");
+    printf("1. Alterar nome do pedido\n");
+    printf("2. Alterar quantidade de um item\n");
+    printf("Escolha: ");
+    scanf("%d", &opcao);
+
+    // pega o nome do pedido que vai ser editado
     printf("Digite o nome do pedido que deseja editar: ");
     scanf("%s", nomePedido);
-    printf("Digite o nome do item que deseja alterar a quantidade: ");
-    scanf("%s", itemAlvo);
-    printf("Digite a nova quantidade: ");
-    scanf("%d", &novaQuantidade);
 
-    // começa a ler cada linha do arquivo de pedidos
+    if (opcao == 1) {
+        printf("Digite o novo nome para o pedido: ");
+        scanf("%s", novoNomePedido);
+    }
+    else if (opcao == 2) {
+        printf("Digite o nome do item que deseja alterar a quantidade: ");
+        scanf("%s", itemAlvo);
+        printf("Digite a nova quantidade: ");
+        scanf("%d", &novaQuantidade);
+    }
+    else {
+        printf("Opção inválida.\n");
+        fclose(arquivoPedidos);
+        fclose(arquivoTemporario);
+        return;
+    }
+
+    // le cada linha do arquivo de pedidos
     while (fgets(linhaPedido, sizeof(linhaPedido), arquivoPedidos)) {
         char nomeLinha[50], usuarioLinha[50], observacao[100];
-        char itensBrutos[300], novaLista[300] = "";
+        char itensBrutos[300], itensCopia[300], novaLista[300];
+        novaLista[0] = '\0'; // garante que a lista comece vazia
 
         // separa nome do pedido e usuário
         sscanf(linhaPedido, "%s %s", nomeLinha, usuarioLinha);
@@ -121,49 +142,66 @@ void editarPedido() {
         if (strcmp(nomeLinha, nomePedido) == 0 && strcmp(usuarioLinha, usuarioLogado) == 0) {
             pedidoEncontrado = 1;
 
-            // separa os itens e a observação
+            // pega onde começam os itens e a observação
             char *inicioItens = strstr(linhaPedido, "Item:");
             char *inicioObs = strstr(linhaPedido, "Obs:");
 
+            // se não tiver os dois, ignora essa linha
             if (inicioItens == NULL || inicioObs == NULL) {
                 printf("Formato do pedido inválido.\n");
                 continue;
             }
 
-            // copia só os itens
+            // copia só os itens (sem a observação)
             strncpy(itensBrutos, inicioItens, inicioObs - inicioItens);
             itensBrutos[inicioObs - inicioItens] = '\0';
 
-            // copia a observação
+            // faz uma cópia dos itens pra usar com strtok
+            strcpy(itensCopia, itensBrutos);
+
+            // copia a observação certinha
             sscanf(inicioObs, "Obs: %[^\n]", observacao);
 
-            // separa os itens usando o ponto e vírgula
-            char *itemAtual = strtok(itensBrutos, ";");
-            int primeiroItem = 1;
+            // se for pra editar a quantidade de um item
+            if (opcao == 2) {
+                char *itemAtual = strtok(itensCopia, ";");
+                int primeiroItem = 1;
 
-            while (itemAtual != NULL) {
-                char nomeItem[50];
-                int quantidadeAtual;
+                // percorre cada item do pedido
+                while (itemAtual != NULL) {
+                    char nomeItem[50];
+                    int quantidadeAtual;
 
-                // extrai o nome e a quantidade do item
-                sscanf(itemAtual, "Item: %s Qtd: %d", nomeItem, &quantidadeAtual);
+                    // pega o nome e a quantidade do item
+                    sscanf(itemAtual, "Item: %s Qtd: %d", nomeItem, &quantidadeAtual);
 
-                // se for o item que queremos editar, atualiza a quantidade
-                if (strcmp(nomeItem, itemAlvo) == 0) {
-                    quantidadeAtual = novaQuantidade;
+                    // se for o item que o user quer editar, ele atualiza a quantidade
+                    if (strcmp(nomeItem, itemAlvo) == 0) {
+                        quantidadeAtual = novaQuantidade;
+                    }
+
+                    // monta a nova lista separando com o ponto e vírgula
+                    if (!primeiroItem) strcat(novaLista, ";");
+                    sprintf(novaLista + strlen(novaLista), "Item: %s Qtd: %d", nomeItem, quantidadeAtual);
+                    primeiroItem = 0;
+
+                    // vai pro próximo item
+                    itemAtual = strtok(NULL, ";");
                 }
-
-                // monta a nova lista com controle do ponto e vírgula
-                if (!primeiroItem) strcat(novaLista, ";");
-                sprintf(novaLista + strlen(novaLista), "Item: %s Qtd: %d", nomeItem, quantidadeAtual);
-                primeiroItem = 0;
-
-                itemAtual = strtok(NULL, ";");
+            }
+            // se for pra mudar o nome do pedido, só copia os itens
+            else {
+                strcpy(novaLista, itensBrutos);
             }
 
             // salva a linha atualizada no arquivo temporário
-            fprintf(arquivoTemporario, "%s %s %s ;Obs: %s\n", nomeLinha, usuarioLinha, novaLista, observacao);
-            printf("Quantidade atualizada com sucesso!\n");
+            fprintf(arquivoTemporario, "%s %s %s ;Obs: %s\n",
+                    (opcao == 1 ? novoNomePedido : nomeLinha),
+                    usuarioLinha,
+                    novaLista,
+                    observacao);
+
+            printf("Pedido editado com sucesso!\n");
         } else {
             // se não for o pedido que queremos, só copia pro arquivo temporário
             fputs(linhaPedido, arquivoTemporario);
@@ -185,9 +223,8 @@ void editarPedido() {
 }
 
 
-
 void excluirPedido() {
-    FILE *f = fopen("pedidos.txt", "r");
+    FILE *arqpedidos = fopen("pedidos.txt", "r");
     FILE *arqaux = fopen("aux.txt", "w");
     char nomePedido[50], usuario[50];
     char linha[300];
@@ -201,7 +238,7 @@ void excluirPedido() {
     printf("Digite o nome do pedido que deseja excluir: ");
     scanf("%s", nomePedido);
 
-    while (fgets(linha, sizeof(linha), f)) {
+    while (fgets(linha, sizeof(linha), arqpedidos)) {
         char linhaNome[50], linhaUsuario[50];
 
         sscanf(linha, "%s %s", linhaNome, linhaUsuario);
@@ -214,7 +251,7 @@ void excluirPedido() {
         }
     }
 
-    fclose(f);
+    fclose(arqpedidos);
     fclose(arqaux);
     remove("pedidos.txt");
     rename("aux.txt", "pedidos.txt");

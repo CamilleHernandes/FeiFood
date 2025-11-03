@@ -1,1 +1,3 @@
-teste2 camille Item: suco Qtd: 2;Item: bolo Qtd: 1 ;Obs: nao
+testinho camille Item: suco Qtd: 1;Item: bolo Qtd: 2;Item: bolo Qtd: 2 ;Obs: nao
+teste1 camille Item: bolo Qtd: 1;Item: coxinha Qtd: 1;Item: coca Qtd: 1;Item: coca Qtd: 1 ;Obs: sem obs
+teste2 camille Item: bolo Qtd: 2;Item: agua Qtd: 2 ;Obs: sem obs

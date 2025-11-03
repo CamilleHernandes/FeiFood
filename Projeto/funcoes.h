@@ -2,7 +2,6 @@
 void cadastrarUsuario();
 int loginUsuario();
 void logoutUsuario();
-
 void mostrarUsuarioLogado();
 
 // Funções alimentos
