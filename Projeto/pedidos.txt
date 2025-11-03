@@ -1,3 +1,4 @@
 teste2 camille Item: bolo Qtd: 2;Item: agua Qtd: 2 ;Obs: sem obs
 pedido1 camille Item: bolo Qtd: 2;Item: agua Qtd: 1 ;Obs: sem obs
 pedido2 camille Item: pastel Qtd: 2;Item: coca Qtd: 2 ;Obs: nao
+teste camille Item: coxinha Qtd: 2 ;Obs: com catupiry
