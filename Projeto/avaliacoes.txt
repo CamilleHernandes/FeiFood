@@ -1,2 +1,3 @@
 Pedido: teste2 Usuário: ana Nota: 3
 Pedido: teste2 Usuário: camille Nota: 5
+Pedido: pedido1 Usuário: camille Nota: 5

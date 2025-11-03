@@ -51,16 +51,16 @@ void criarPedido() {
     fscanf(arquivoUserLogado, "%s", usuarioLogado);
     fclose(arquivoUserLogado);
 
-    printf("Digite um nome para o pedido: ");
+    printf("\nDigite um nome para o pedido: ");
     scanf("%s", nomePedido);
 
-    printf("Quantos alimentos deseja adicionar ao pedido? ");
+    printf("Quantos alimentos deseja adicionar ao pedido?: ");
     scanf("%d", &quantidadeAlimentos);
 
     fprintf(arquivoPedidos, "%s %s ", nomePedido, usuarioLogado); // nome do pedido e usuário
 
     for (int i = 0; i < quantidadeAlimentos; i++) {
-        printf("Digite o alimento %d: ", i + 1);
+        printf("\nDigite o alimento %d: ", i + 1);
         scanf("%s", alimento);
 
         printf("Digite a quantidade do alimento %d: ", i + 1);
@@ -102,7 +102,7 @@ void editarPedido() {
     fclose(arquivoUserLogado);
 
     // menu de edição — o usuário escolhe o que quer alterar
-    printf("\n***** O que deseja editar? *****\n");
+    printf("\n*** O que deseja editar? ***\n");
     printf("1. Alterar nome do pedido\n");
     printf("2. Alterar quantidade de um item\n");
     printf("Escolha: ");
@@ -112,16 +112,19 @@ void editarPedido() {
     printf("Digite o nome do pedido que deseja editar: ");
     scanf("%s", nomePedido);
 
+    // se for pra mudar o nome
     if (opcao == 1) {
         printf("Digite o novo nome para o pedido: ");
         scanf("%s", novoNomePedido);
     }
+    // se for pra mudar a quantidade de um item
     else if (opcao == 2) {
         printf("Digite o nome do item que deseja alterar a quantidade: ");
         scanf("%s", itemAlvo);
         printf("Digite a nova quantidade: ");
         scanf("%d", &novaQuantidade);
     }
+    // se escolher algo inválido
     else {
         printf("Opção inválida.\n");
         fclose(arquivoPedidos);
@@ -129,11 +132,11 @@ void editarPedido() {
         return;
     }
 
-    // le cada linha do arquivo de pedidos
+    // começa a ler cada linha do arquivo de pedidos
     while (fgets(linhaPedido, sizeof(linhaPedido), arquivoPedidos)) {
         char nomeLinha[50], usuarioLinha[50], observacao[100];
         char itensBrutos[300], itensCopia[300], novaLista[300];
-        novaLista[0] = '\0'; // garante que a lista comece vazia
+        novaLista[0] = '\0'; // garante que a lista começa vazia
 
         // separa nome do pedido e usuário
         sscanf(linhaPedido, "%s %s", nomeLinha, usuarioLinha);
@@ -172,15 +175,15 @@ void editarPedido() {
                     char nomeItem[50];
                     int quantidadeAtual;
 
-                    // pega o nome e a quantidade do item
+                    // extrai o nome e a quantidade do item
                     sscanf(itemAtual, "Item: %s Qtd: %d", nomeItem, &quantidadeAtual);
 
-                    // se for o item que o user quer editar, ele atualiza a quantidade
+                    // se for o item que queremos editar, atualiza a quantidade
                     if (strcmp(nomeItem, itemAlvo) == 0) {
                         quantidadeAtual = novaQuantidade;
                     }
 
-                    // monta a nova lista separando com o ponto e vírgula
+                    // monta a nova lista com controle do ponto e vírgula
                     if (!primeiroItem) strcat(novaLista, ";");
                     sprintf(novaLista + strlen(novaLista), "Item: %s Qtd: %d", nomeItem, quantidadeAtual);
                     primeiroItem = 0;
@@ -221,6 +224,7 @@ void editarPedido() {
         printf("Pedido não encontrado ou não pertence ao usuário logado.\n");
     }
 }
+
 
 
 void excluirPedido() {
@@ -367,7 +371,7 @@ void removerAlimentoPedido() {
     fclose(arquivoUserLogado);
 
     // pega as infos do usuário
-    printf("Digite o nome do pedido que deseja editar: ");
+    printf("\nDigite o nome do pedido que deseja editar: ");
     scanf("%s", nomePedido);
     printf("Digite o nome do item que deseja remover: ");
     scanf("%s", itemRemover);
@@ -392,7 +396,6 @@ void removerAlimentoPedido() {
 
             // se não tiver os dois, ignora essa linha
             if (inicioItens == NULL || inicioObs == NULL) {
-                printf("Formato do pedido inválido.\n");
                 continue;
             }
 
@@ -435,7 +438,7 @@ void removerAlimentoPedido() {
 
             // salva a linha atualizada no arquivo temporário
             fprintf(arquivoTemporario, "%s %s %s ;Obs: %s\n", nomeLinha, usuarioLinha, novaLista, observacao);
-            printf("Item removido com sucesso!\n");
+            printf("\nItem removido com sucesso!\n");
         } else {
             // se não for o pedido que queremos, só copia pro arquivo temporário
             fputs(linhaPedido, arquivoTemporario);
