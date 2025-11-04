@@ -5,3 +5,4 @@ teste camille Item: coxinha Qtd: 2 ;Obs: com catupiry
 testinho Maria Item: agua Qtd: 1;Item: pastel Qtd: 1;Item: bolo Qtd: 1;Item: sushi Qtd: 1;Item: lasanha Qtd: 2 ;Obs: nao
 pedido4 Maria Item: lasanha Qtd: 2 ;Obs: nao
 pedido5 Maria Item: coxinha Qtd: 3 ;Obs: nao
+teste2 laura Item: coxinha Qtd: 2 ;Obs: gelado
