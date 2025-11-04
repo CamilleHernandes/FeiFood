@@ -68,7 +68,7 @@ void criarPedido() {
 
         fprintf(arquivoPedidos, "Item: %s Qtd: %d", alimento, quantidadeItem);
 
-        if (i < quantidadeAlimentos - 1) {
+        if (i < quantidadeAlimentos - 1) { // se não for o último item, adiciona ponto e vírgula
             fprintf(arquivoPedidos, ";");
         }
     }
@@ -133,7 +133,7 @@ void editarPedido() {
     }
 
     // começa a ler cada linha do arquivo de pedidos
-    while (fgets(linhaPedido, sizeof(linhaPedido), arquivoPedidos)) {
+    while (fgets(linhaPedido, sizeof(linhaPedido), arquivoPedidos)) { // o fgets recebe o tam da linha e o arquivo escreve na variavel linhaPedido
         char nomeLinha[50], usuarioLinha[50], observacao[100];
         char itensBrutos[300], itensCopia[300], novaLista[300];
         novaLista[0] = '\0'; // garante que a lista começa vazia
@@ -142,11 +142,11 @@ void editarPedido() {
         sscanf(linhaPedido, "%s %s", nomeLinha, usuarioLinha);
 
         // verifica se é o pedido certo e se é do usuário logado
-        if (strcmp(nomeLinha, nomePedido) == 0 && strcmp(usuarioLinha, usuarioLogado) == 0) {
+        if (strcmp(nomeLinha, nomePedido) == 0 && strcmp(usuarioLinha, usuarioLogado) == 0) { // strcmp compara strings e retorna 0 se forem iguais
             pedidoEncontrado = 1;
 
             // pega onde começam os itens e a observação
-            char *inicioItens = strstr(linhaPedido, "Item:");
+            char *inicioItens = strstr(linhaPedido, "Item:"); // strstr localiza uma substring(pedaço especifico de uma string) dentro de uma string maior
             char *inicioObs = strstr(linhaPedido, "Obs:");
 
             // se não tiver os dois, ignora essa linha
@@ -179,7 +179,7 @@ void editarPedido() {
                     sscanf(itemAtual, "Item: %s Qtd: %d", nomeItem, &quantidadeAtual);
 
                     // se for o item que queremos editar, atualiza a quantidade
-                    if (strcmp(nomeItem, itemAlvo) == 0) {
+                    if (strcmp(nomeItem, itemAlvo) == 0) { // compara o nome do item atual com o nome do item alvo
                         quantidadeAtual = novaQuantidade;
                     }
 
@@ -207,7 +207,7 @@ void editarPedido() {
             printf("Pedido editado com sucesso!\n");
         } else {
             // se não for o pedido que queremos, só copia pro arquivo temporário
-            fputs(linhaPedido, arquivoTemporario);
+            fputs(linhaPedido, arquivoTemporario); 
         }
     }
 
@@ -242,7 +242,7 @@ void excluirPedido() {
     printf("Digite o nome do pedido que deseja excluir: ");
     scanf("%s", nomePedido);
 
-    while (fgets(linha, sizeof(linha), arqpedidos)) {
+    while (fgets(linha, sizeof(linha), arqpedidos)) { // o fgets lê uma linha do arquivo arqpedidos e armazena na variável linha
         char linhaNome[50], linhaUsuario[50];
 
         sscanf(linha, "%s %s", linhaNome, linhaUsuario);
@@ -306,7 +306,7 @@ void adicionarAlimentoPedido() {
             pedidoEncontrado = 1;
 
             // pega onde começam os itens e a observação
-            char *inicioItens = strstr(linhaPedido, "Item:");
+            char *inicioItens = strstr(linhaPedido, "Item:"); // strstr localiza uma substring(pedaço especifico de uma string) dentro de uma string maior
             char *inicioObs = strstr(linhaPedido, "Obs:");
 
             if (inicioItens == NULL || inicioObs == NULL) {
@@ -377,7 +377,7 @@ void removerAlimentoPedido() {
     scanf("%s", itemRemover);
 
     // começa a ler cada linha do arquivo de pedidos
-    while (fgets(linhaPedido, sizeof(linhaPedido), arquivoPedidos)) {
+    while (fgets(linhaPedido, sizeof(linhaPedido), arquivoPedidos)) { // o fgets lê uma linha do arquivo arqpedidos e armazena na variável linha
         char nomeLinha[50], usuarioLinha[50];
         char itensBrutos[300], observacao[200];
         char novaLista[300] = "";
@@ -440,7 +440,7 @@ void removerAlimentoPedido() {
             fprintf(arquivoTemporario, "%s %s %s ;Obs: %s\n", nomeLinha, usuarioLinha, novaLista, observacao);
             printf("\nItem removido com sucesso!\n");
         } else {
-            // se não for o pedido que queremos, só copia pro arquivo temporário
+            // se não for o pedido, só copia pro arquivo temporário
             fputs(linhaPedido, arquivoTemporario);
         }
     }

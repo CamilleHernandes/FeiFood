@@ -19,7 +19,7 @@ void buscarAlimento() {
     // percorre o arquivo de alimentos procurando o nome
     while (fscanf(alim, "%s %f", nome, &preco) != EOF) {
         // se encontrar, mostra na tela e salva no arquivo de buscados
-        if (strcmp(nomeBusca, nome) == 0) {
+        if (strcmp(nomeBusca, nome) == 0) { 
             printf("\nAlimento encontrado: %s - R$ %.2f\n", nome, preco);
             fprintf(buscados, "%s %.2f\n\n", nome, preco);
             encontrado = 1;
