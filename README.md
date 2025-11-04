@@ -25,7 +25,7 @@
 
 *Permite que novos usuários sejam registrados no sistema, armazenando seus dados em um arquivo de texto.*
 
-![CadastrarUser.](/prints/menunicial.png)
+![CadastrarUser.](/prints/menuInicial.png)
 
 **2. Login de Usuário:**
 
@@ -37,48 +37,52 @@
 
 *Aqui o usuário escolhe um nome para o pedido, adiciona alimentos com suas quantidades e pode incluir uma observação.*
 
-![criaPed.](/prints/menunicial.png)
+![criaPed.](/prints/criarPedido.png)
 
 **4. Editar pedidos (nome ou quantidade de um item):**
 
 *Permite alterar o nome do pedido ou a quantidade de um item específico.*
 
-![editaPed.](/prints/menunicial.png)
+![editaPed.](/prints/editarPedido.png)
+
+![EditarNomePedido.](/prints/EditarNomePedido.png)
+
+![EditarQtdPedido.](/prints/EditarQtdPed.png)
 
 **5. Excluir pedidos:**
 
 *Remove um pedido do sistema, desde que pertença ao usuário logado.*
 
-![ExcluiPed.](/prints/menunicial.png)
+![ExcluiPed.](/prints/excluirPed.png)
 
 **6. Adicionar alimentos de um pedido:**
 
 *Insere um novo alimento ao pedido existente, mantendo a estrutura correta dos dados.*
 
-![adicAlim.](/prints/menunicial.png)
+![adicAlim.](/prints/adicionarItem.png)
 
 **7. Remover alimentos de um pedido:**
 
 *Exclui um item específico de um pedido. Se não restarem itens, o pedido é apagado.*
 
-![removAlim.](/prints/menunicial.png)
+![removAlim.](/prints/removerItem.png)
 
 **8. Buscar alimentos por nome:**
 
 *Procura um alimento pelo nome na lista de alimentos disponíveis e registra a busca.*
 
-![buscaAlim.](/prints/menunicial.png)
+![buscaAlim.](/prints/buscaAlim.png)
 
 **9. Listar alimentos buscados:**
 
 *Exibe todos os alimentos que foram buscados anteriormente pelo usuário.*
 
-![listaAlim.](/prints/menunicial.png)
+![listaAlim.](/prints/listaAlim.png)
 
 **10. Avaliar pedidos com estrelas:**
 *Permite que o usuário atribua uma nota ao pedido, registrando a avaliação no sistema.*
 
-![avaliaAlim.](/prints/menunicial.png)
+![avaliarPed.](/prints/AvaliarPed.png)
 
 
 ## Conclusão
