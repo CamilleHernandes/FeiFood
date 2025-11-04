@@ -19,14 +19,68 @@
 * `sessao.txt` — Registra o usuário atualmente logado.
 * `usuarios.txt` — Lista de usuários cadastrados no sistema.
 
-### Funcionalidades Principais:
+## Funcionalidades Principais:
 
-* Cadastrar Novo Usuário;
-* Login de Usuário;
-* Criar pedidos com múltiplos alimentos;
-* Editar pedidos (nome ou quantidade de um item);
-* Excluir pedidos;
-* Adicionar ou remover alimentos de um pedido;
-* Buscar alimentos por nome;
-* Listar alimentos buscados;
-* Avaliar pedidos com estrelas;
+**1. Cadastrar Novo Usuário:**
+
+*Permite que novos usuários sejam registrados no sistema, armazenando seus dados em um arquivo de texto.*
+
+![CadastrarUser.](/prints/menunicial.png)
+
+**2. Login de Usuário:**
+
+*Verifica se o usuário existe e registra a sessão atual para controle das ações realizadas.*
+
+![LoginUser.](/prints/menunicial.png)
+
+**3. Criar pedidos:**
+
+*Aqui o usuário escolhe um nome para o pedido, adiciona alimentos com suas quantidades e pode incluir uma observação.*
+
+![criaPed.](/prints/menunicial.png)
+
+**4. Editar pedidos (nome ou quantidade de um item):**
+
+*Permite alterar o nome do pedido ou a quantidade de um item específico.*
+
+![editaPed.](/prints/menunicial.png)
+
+**5. Excluir pedidos:**
+
+*Remove um pedido do sistema, desde que pertença ao usuário logado.*
+
+![ExcluiPed.](/prints/menunicial.png)
+
+**6. Adicionar alimentos de um pedido:**
+
+*Insere um novo alimento ao pedido existente, mantendo a estrutura correta dos dados.*
+
+![adicAlim.](/prints/menunicial.png)
+
+**7. Remover alimentos de um pedido:**
+
+*Exclui um item específico de um pedido. Se não restarem itens, o pedido é apagado.*
+
+![removAlim.](/prints/menunicial.png)
+
+**8. Buscar alimentos por nome:**
+
+*Procura um alimento pelo nome na lista de alimentos disponíveis e registra a busca.*
+
+![buscaAlim.](/prints/menunicial.png)
+
+**9. Listar alimentos buscados:**
+
+*Exibe todos os alimentos que foram buscados anteriormente pelo usuário.*
+
+![listaAlim.](/prints/menunicial.png)
+
+**10. Avaliar pedidos com estrelas:**
+*Permite que o usuário atribua uma nota ao pedido, registrando a avaliação no sistema.*
+
+![avaliaAlim.](/prints/menunicial.png)
+
+
+## Conclusão
+
+*Durante o desenvolvimento deste projeto, consegui aplicar vários conceitos importantes da linguagem C, principalmente relacionados à manipulação de arquivos e à organização do código em funções separadas. A ideia foi criar um sistema simples, mas funcional, que permitisse gerenciar pedidos, alimentos e usuários de forma prática pelo terminal. Além de reforçar o uso de estruturas básicas da linguagem, o projeto também me ajudou a entender melhor como organizar um programa em partes e como deixar o código mais claro e reutilizável.*
