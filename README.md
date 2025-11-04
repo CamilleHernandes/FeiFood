@@ -1,4 +1,7 @@
 # Projeto - FEIFOOD
+
+## Desenvolvedora: Camille Pereira Hernandes
+
 ### Bem Vindo(a) ao FeiFood!
 *Este projeto tem como objetivo desenvolver um sistema de gerenciamento de pedidos utilizando a linguagem de programação C. O programa permite que o usuário cadastre alimentos, crie pedidos personalizados, edite e remova itens, além de realizar buscas e avaliações. Todas as informações são armazenadas em arquivos .txt, simulando uma base de dados simples e acessível.*
 

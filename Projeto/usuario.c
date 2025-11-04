@@ -30,7 +30,7 @@ int loginUsuario() {
     printf("Senha: ");
     scanf("%s", senha);
 
-    while (fscanf(usuarios, "%s %s %s", nomeLido, emailLido, senhaLida) != EOF) {
+    while (fscanf(usuarios, "%s %s %s", nomeLido, emailLido, senhaLida) != EOF) { // o while lê cada linha do arquivo usuarios.txt
         if (strcmp(nome, nomeLido) == 0 && strcmp(senha, senhaLida) == 0) {
             logado = 1;
             break;
