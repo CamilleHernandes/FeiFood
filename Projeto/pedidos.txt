@@ -1,8 +1,9 @@
 teste2 camille Item: bolo Qtd: 2;Item: agua Qtd: 2 ;Obs: sem obs
-pedido1 camille Item: bolo Qtd: 2;Item: agua Qtd: 1 ;Obs: sem obs
-pedido2 camille Item: pastel Qtd: 2;Item: coca Qtd: 2 ;Obs: nao
+pedido2 camille Item: pastel Qtd: 2 ;Item: pastel Qtd: 1 ;Obs: nao
+
 teste camille Item: coxinha Qtd: 2 ;Obs: com catupiry
 testinho Maria Item: agua Qtd: 1;Item: pastel Qtd: 1;Item: bolo Qtd: 1;Item: sushi Qtd: 1;Item: lasanha Qtd: 2 ;Obs: nao
 pedido4 Maria Item: lasanha Qtd: 2 ;Obs: nao
 pedido5 Maria Item: coxinha Qtd: 3 ;Obs: nao
 teste2 laura Item: coxinha Qtd: 2 ;Obs: gelado
+teste4 luciano Item: coxinha Qtd: 1;Item: banana Qtd: 1;Item: pastel Qtd: 2 ;Obs: nao
