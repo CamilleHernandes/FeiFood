@@ -27,11 +27,14 @@
 
 ![CadastrarUser.](/prints/menuInicial.png)
 
+![CadastrarUser.](/prints/cadastrando.png)
+
+
 **2. Login de Usuário:**
 
 *Verifica se o usuário existe e registra a sessão atual para controle das ações realizadas.*
 
-![LoginUser.](/prints/menunicial.png)
+![LoginUser.](/prints/login.png)
 
 **3. Criar pedidos:**
 
@@ -71,13 +74,13 @@
 
 *Procura um alimento pelo nome na lista de alimentos disponíveis e registra a busca.*
 
-![buscaAlim.](/prints/buscaAlim.png)
+![buscaAlim.](/prints/buscarAlim.png)
 
 **9. Listar alimentos buscados:**
 
 *Exibe todos os alimentos que foram buscados anteriormente pelo usuário.*
 
-![listaAlim.](/prints/listaAlim.png)
+![listaAlim.](/prints/ListaAlim.png)
 
 **10. Avaliar pedidos com estrelas:**
 *Permite que o usuário atribua uma nota ao pedido, registrando a avaliação no sistema.*
